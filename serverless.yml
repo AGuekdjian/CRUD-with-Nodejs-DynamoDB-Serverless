@@ -4,11 +4,58 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  region: sa-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource:
+            - arn:aws:dynamodb:sa-east-1:213475925080:table/tableTask
 
 functions:
-  api:
-    handler: index.handler
+  hello:
+    handler: src/hello.hello
     events:
       - httpApi:
           path: /
           method: get
+  createTask:
+    handler: src/createTask.createTask
+    events:
+      - httpApi:
+          path: /tasks
+          method: post
+  listTasks:
+    handler: src/listTasks.listTasks
+    events:
+      - httpApi:
+          path: /tasks
+          method: get
+  getTask:
+    handler: src/getTask.getTask
+    events:
+      - httpApi:
+          path: /tasks/{id}
+          method: get
+  updateTask:
+    handler: src/updateTask.updateTask
+    events:
+      - httpApi:
+          path: /tasks/{id}
+          method: put
+
+resources:
+  Resources: 
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: tableTask
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
