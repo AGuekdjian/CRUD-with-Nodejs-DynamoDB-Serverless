@@ -38,6 +38,7 @@ endpoints:
   GET - https://o3ms4aczt6.execute-api.sa-east-1.amazonaws.com/tasks/{id}
   PUT - https://o3ms4aczt6.execute-api.sa-east-1.amazonaws.com/tasks/{id}
   DELETE - https://o3ms4aczt6.execute-api.sa-east-1.amazonaws.com/tasks/{id}
+  
 functions:
   hello: crud-with-nodejs-y-dynamodb-dev-hello
   createTask: crud-with-nodejs-y-dynamodb-dev-createTask
